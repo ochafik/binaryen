@@ -15,6 +15,13 @@ full changeset diff at the end of each section.
 Current Trunk
 -------------
 
+ - wasm2js: Flatten deeply-nested chains of blocks and ifs into a shallow
+   `while (1) { switch (...) { ... } }` dispatch loop, so that very deep
+   structured control flow (e.g. from large functions, `br_table`s, or
+   emscripten's JS-based exception/longjmp lowering) no longer produces
+   JS that overflows JS-engine parsers (`Maximum call stack size
+   exceeded`) at parse time.
+
  - Rename relaxed SIMD instructions to prepend the `relaxed_` prefix.
    - Rename C and JS API operations to prepend the `Relaxed` prefix:
      - `LaneselectI8x16` to `RelaxedLaneselectI8x16`

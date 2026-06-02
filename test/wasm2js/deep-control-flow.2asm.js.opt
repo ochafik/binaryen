@@ -1,0 +1,1765 @@
+
+function asmFunc(imports) {
+ var Math_imul = Math.imul;
+ var Math_fround = Math.fround;
+ var Math_abs = Math.abs;
+ var Math_clz32 = Math.clz32;
+ var Math_min = Math.min;
+ var Math_max = Math.max;
+ var Math_floor = Math.floor;
+ var Math_ceil = Math.ceil;
+ var Math_trunc = Math.trunc;
+ var Math_sqrt = Math.sqrt;
+ var g = 0;
+ function deep_fallthrough() {
+  return 7260;
+ }
+ 
+ function deep_branch($0) {
+  $0 = $0 | 0;
+  var $1 = 0;
+  $1 = 1;
+  br0 : {
+   if (!$0) {
+    break br0
+   }
+   $1 = 2;
+   if (($0 | 0) == 1) {
+    break br0
+   }
+   $1 = 3;
+   if (($0 | 0) == 2) {
+    break br0
+   }
+   $1 = 4;
+   if (($0 | 0) == 3) {
+    break br0
+   }
+   $1 = 5;
+   if (($0 | 0) == 4) {
+    break br0
+   }
+   $1 = 6;
+   if (($0 | 0) == 5) {
+    break br0
+   }
+   $1 = 7;
+   if (($0 | 0) == 6) {
+    break br0
+   }
+   $1 = 8;
+   if (($0 | 0) == 7) {
+    break br0
+   }
+   $1 = 9;
+   if (($0 | 0) == 8) {
+    break br0
+   }
+   $1 = 10;
+   if (($0 | 0) == 9) {
+    break br0
+   }
+   $1 = 11;
+   if (($0 | 0) == 10) {
+    break br0
+   }
+   $1 = 12;
+   if (($0 | 0) == 11) {
+    break br0
+   }
+   $1 = 13;
+   if (($0 | 0) == 12) {
+    break br0
+   }
+   $1 = 14;
+   if (($0 | 0) == 13) {
+    break br0
+   }
+   $1 = 15;
+   if (($0 | 0) == 14) {
+    break br0
+   }
+   $1 = 16;
+   if (($0 | 0) == 15) {
+    break br0
+   }
+   $1 = 17;
+   if (($0 | 0) == 16) {
+    break br0
+   }
+   $1 = 18;
+   if (($0 | 0) == 17) {
+    break br0
+   }
+   $1 = 19;
+   if (($0 | 0) == 18) {
+    break br0
+   }
+   $1 = 20;
+   if (($0 | 0) == 19) {
+    break br0
+   }
+   $1 = 21;
+   if (($0 | 0) == 20) {
+    break br0
+   }
+   $1 = 22;
+   if (($0 | 0) == 21) {
+    break br0
+   }
+   $1 = 23;
+   if (($0 | 0) == 22) {
+    break br0
+   }
+   $1 = 24;
+   if (($0 | 0) == 23) {
+    break br0
+   }
+   $1 = 25;
+   if (($0 | 0) == 24) {
+    break br0
+   }
+   $1 = 26;
+   if (($0 | 0) == 25) {
+    break br0
+   }
+   $1 = 27;
+   if (($0 | 0) == 26) {
+    break br0
+   }
+   $1 = 28;
+   if (($0 | 0) == 27) {
+    break br0
+   }
+   $1 = 29;
+   if (($0 | 0) == 28) {
+    break br0
+   }
+   $1 = 30;
+   if (($0 | 0) == 29) {
+    break br0
+   }
+   $1 = 31;
+   if (($0 | 0) == 30) {
+    break br0
+   }
+   $1 = 32;
+   if (($0 | 0) == 31) {
+    break br0
+   }
+   $1 = 33;
+   if (($0 | 0) == 32) {
+    break br0
+   }
+   $1 = 34;
+   if (($0 | 0) == 33) {
+    break br0
+   }
+   $1 = 35;
+   if (($0 | 0) == 34) {
+    break br0
+   }
+   $1 = 36;
+   if (($0 | 0) == 35) {
+    break br0
+   }
+   $1 = 37;
+   if (($0 | 0) == 36) {
+    break br0
+   }
+   $1 = 38;
+   if (($0 | 0) == 37) {
+    break br0
+   }
+   $1 = 39;
+   if (($0 | 0) == 38) {
+    break br0
+   }
+   $1 = 40;
+   if (($0 | 0) == 39) {
+    break br0
+   }
+   $1 = 41;
+   if (($0 | 0) == 40) {
+    break br0
+   }
+   $1 = 42;
+   if (($0 | 0) == 41) {
+    break br0
+   }
+   $1 = 43;
+   if (($0 | 0) == 42) {
+    break br0
+   }
+   $1 = 44;
+   if (($0 | 0) == 43) {
+    break br0
+   }
+   $1 = 45;
+   if (($0 | 0) == 44) {
+    break br0
+   }
+   $1 = 46;
+   if (($0 | 0) == 45) {
+    break br0
+   }
+   $1 = 47;
+   if (($0 | 0) == 46) {
+    break br0
+   }
+   $1 = 48;
+   if (($0 | 0) == 47) {
+    break br0
+   }
+   $1 = 49;
+   if (($0 | 0) == 48) {
+    break br0
+   }
+   $1 = 50;
+   if (($0 | 0) == 49) {
+    break br0
+   }
+   $1 = 51;
+   if (($0 | 0) == 50) {
+    break br0
+   }
+   $1 = 52;
+   if (($0 | 0) == 51) {
+    break br0
+   }
+   $1 = 53;
+   if (($0 | 0) == 52) {
+    break br0
+   }
+   $1 = 54;
+   if (($0 | 0) == 53) {
+    break br0
+   }
+   $1 = 55;
+   if (($0 | 0) == 54) {
+    break br0
+   }
+   $1 = 56;
+   if (($0 | 0) == 55) {
+    break br0
+   }
+   $1 = 57;
+   if (($0 | 0) == 56) {
+    break br0
+   }
+   $1 = 58;
+   if (($0 | 0) == 57) {
+    break br0
+   }
+   $1 = 59;
+   if (($0 | 0) == 58) {
+    break br0
+   }
+   $1 = 60;
+   if (($0 | 0) == 59) {
+    break br0
+   }
+   $1 = 61;
+   if (($0 | 0) == 60) {
+    break br0
+   }
+   $1 = 62;
+   if (($0 | 0) == 61) {
+    break br0
+   }
+   $1 = 63;
+   if (($0 | 0) == 62) {
+    break br0
+   }
+   $1 = 64;
+   if (($0 | 0) == 63) {
+    break br0
+   }
+   $1 = 65;
+   if (($0 | 0) == 64) {
+    break br0
+   }
+   $1 = 66;
+   if (($0 | 0) == 65) {
+    break br0
+   }
+   $1 = 67;
+   if (($0 | 0) == 66) {
+    break br0
+   }
+   $1 = 68;
+   if (($0 | 0) == 67) {
+    break br0
+   }
+   $1 = 69;
+   if (($0 | 0) == 68) {
+    break br0
+   }
+   $1 = 70;
+   if (($0 | 0) == 69) {
+    break br0
+   }
+   $1 = 71;
+   if (($0 | 0) == 70) {
+    break br0
+   }
+   $1 = 72;
+   if (($0 | 0) == 71) {
+    break br0
+   }
+   $1 = 73;
+   if (($0 | 0) == 72) {
+    break br0
+   }
+   $1 = 74;
+   if (($0 | 0) == 73) {
+    break br0
+   }
+   $1 = 75;
+   if (($0 | 0) == 74) {
+    break br0
+   }
+   $1 = 76;
+   if (($0 | 0) == 75) {
+    break br0
+   }
+   $1 = 77;
+   if (($0 | 0) == 76) {
+    break br0
+   }
+   $1 = 78;
+   if (($0 | 0) == 77) {
+    break br0
+   }
+   $1 = 79;
+   if (($0 | 0) == 78) {
+    break br0
+   }
+   $1 = 80;
+   if (($0 | 0) == 79) {
+    break br0
+   }
+   $1 = 81;
+   if (($0 | 0) == 80) {
+    break br0
+   }
+   $1 = 82;
+   if (($0 | 0) == 81) {
+    break br0
+   }
+   $1 = 83;
+   if (($0 | 0) == 82) {
+    break br0
+   }
+   $1 = 84;
+   if (($0 | 0) == 83) {
+    break br0
+   }
+   $1 = 85;
+   if (($0 | 0) == 84) {
+    break br0
+   }
+   $1 = 86;
+   if (($0 | 0) == 85) {
+    break br0
+   }
+   $1 = 87;
+   if (($0 | 0) == 86) {
+    break br0
+   }
+   $1 = 88;
+   if (($0 | 0) == 87) {
+    break br0
+   }
+   $1 = 89;
+   if (($0 | 0) == 88) {
+    break br0
+   }
+   $1 = 90;
+   if (($0 | 0) == 89) {
+    break br0
+   }
+   $1 = 8990;
+  }
+  return $1 + 100 | 0;
+ }
+ 
+ function deep_switch($0) {
+  $0 = $0 | 0;
+  var $1 = 0;
+  end : {
+   sw0 : {
+    switch ($0 | 0) {
+    case 69:
+     $1 = 139;
+     break end;
+    case 68:
+     $1 = 137;
+     break end;
+    case 67:
+     $1 = 135;
+     break end;
+    case 66:
+     $1 = 133;
+     break end;
+    case 65:
+     $1 = 131;
+     break end;
+    case 64:
+     $1 = 129;
+     break end;
+    case 63:
+     $1 = 127;
+     break end;
+    case 62:
+     $1 = 125;
+     break end;
+    case 61:
+     $1 = 123;
+     break end;
+    case 60:
+     $1 = 121;
+     break end;
+    case 59:
+     $1 = 119;
+     break end;
+    case 58:
+     $1 = 117;
+     break end;
+    case 57:
+     $1 = 115;
+     break end;
+    case 56:
+     $1 = 113;
+     break end;
+    case 55:
+     $1 = 111;
+     break end;
+    case 54:
+     $1 = 109;
+     break end;
+    case 53:
+     $1 = 107;
+     break end;
+    case 52:
+     $1 = 105;
+     break end;
+    case 51:
+     $1 = 103;
+     break end;
+    case 50:
+     $1 = 101;
+     break end;
+    case 49:
+     $1 = 99;
+     break end;
+    case 48:
+     $1 = 97;
+     break end;
+    case 47:
+     $1 = 95;
+     break end;
+    case 46:
+     $1 = 93;
+     break end;
+    case 45:
+     $1 = 91;
+     break end;
+    case 44:
+     $1 = 89;
+     break end;
+    case 43:
+     $1 = 87;
+     break end;
+    case 42:
+     $1 = 85;
+     break end;
+    case 41:
+     $1 = 83;
+     break end;
+    case 40:
+     $1 = 81;
+     break end;
+    case 39:
+     $1 = 79;
+     break end;
+    case 38:
+     $1 = 77;
+     break end;
+    case 37:
+     $1 = 75;
+     break end;
+    case 36:
+     $1 = 73;
+     break end;
+    case 35:
+     $1 = 71;
+     break end;
+    case 34:
+     $1 = 69;
+     break end;
+    case 33:
+     $1 = 67;
+     break end;
+    case 32:
+     $1 = 65;
+     break end;
+    case 31:
+     $1 = 63;
+     break end;
+    case 30:
+     $1 = 61;
+     break end;
+    case 29:
+     $1 = 59;
+     break end;
+    case 28:
+     $1 = 57;
+     break end;
+    case 27:
+     $1 = 55;
+     break end;
+    case 26:
+     $1 = 53;
+     break end;
+    case 25:
+     $1 = 51;
+     break end;
+    case 24:
+     $1 = 49;
+     break end;
+    case 23:
+     $1 = 47;
+     break end;
+    case 22:
+     $1 = 45;
+     break end;
+    case 21:
+     $1 = 43;
+     break end;
+    case 20:
+     $1 = 41;
+     break end;
+    case 19:
+     $1 = 39;
+     break end;
+    case 18:
+     $1 = 37;
+     break end;
+    case 17:
+     $1 = 35;
+     break end;
+    case 16:
+     $1 = 33;
+     break end;
+    case 15:
+     $1 = 31;
+     break end;
+    case 14:
+     $1 = 29;
+     break end;
+    case 13:
+     $1 = 27;
+     break end;
+    case 12:
+     $1 = 25;
+     break end;
+    case 11:
+     $1 = 23;
+     break end;
+    case 10:
+     $1 = 21;
+     break end;
+    case 9:
+     $1 = 19;
+     break end;
+    case 8:
+     $1 = 17;
+     break end;
+    case 7:
+     $1 = 15;
+     break end;
+    case 6:
+     $1 = 13;
+     break end;
+    case 5:
+     $1 = 11;
+     break end;
+    case 4:
+     $1 = 9;
+     break end;
+    case 3:
+     $1 = 7;
+     break end;
+    case 2:
+     $1 = 5;
+     break end;
+    case 1:
+     $1 = 3;
+     break end;
+    case 0:
+     break sw0;
+    default:
+     break end;
+    };
+   }
+   $1 = 1;
+  }
+  return $1 | 0;
+ }
+ 
+ function deep_if($0) {
+  $0 = $0 | 0;
+  var $1 = 0, wasm2js_i32$0 = 0;
+  if (($0 | 0) > 0) {
+   $1 = 1;
+   if (($0 | 0) > 1) {
+    $1 = 3;
+    if (($0 | 0) > 2) {
+     $1 = 6;
+     if (($0 | 0) > 3) {
+      $1 = 10;
+      if (($0 | 0) > 4) {
+       $1 = 15;
+       if (($0 | 0) > 5) {
+        $1 = 21;
+        if (($0 | 0) > 6) {
+         $1 = 28;
+         if (($0 | 0) > 7) {
+          $1 = 36;
+          if (($0 | 0) > 8) {
+           $1 = 45;
+           if (($0 | 0) > 9) {
+            $1 = 55;
+            if (($0 | 0) > 10) {
+             $1 = 66;
+             if (($0 | 0) > 11) {
+              $1 = 78;
+              if (($0 | 0) > 12) {
+               $1 = 91;
+               if (($0 | 0) > 13) {
+                $1 = 105;
+                if (($0 | 0) > 14) {
+                 $1 = 120;
+                 if (($0 | 0) > 15) {
+                  $1 = 136;
+                  if (($0 | 0) > 16) {
+                   $1 = 153;
+                   if (($0 | 0) > 17) {
+                    $1 = 171;
+                    if (($0 | 0) > 18) {
+                     $1 = 190;
+                     if (($0 | 0) > 19) {
+                      $1 = 210;
+                      if (($0 | 0) > 20) {
+                       $1 = 231;
+                       if (($0 | 0) > 21) {
+                        $1 = 253;
+                        if (($0 | 0) > 22) {
+                         $1 = 276;
+                         if (($0 | 0) > 23) {
+                          $1 = 300;
+                          if (($0 | 0) > 24) {
+                           $1 = 325;
+                           if (($0 | 0) > 25) {
+                            $1 = 351;
+                            if (($0 | 0) > 26) {
+                             $1 = 378;
+                             if (($0 | 0) > 27) {
+                              $1 = 406;
+                              if (($0 | 0) > 28) {
+                               $1 = 435;
+                               if (($0 | 0) > 29) {
+                                $1 = 465;
+                                if (($0 | 0) > 30) {
+                                 $1 = 496;
+                                 if (($0 | 0) > 31) {
+                                  $1 = 528;
+                                  if (($0 | 0) > 32) {
+                                   $1 = 561;
+                                   if (($0 | 0) > 33) {
+                                    $1 = 595;
+                                    if (($0 | 0) > 34) {
+                                     $1 = 630;
+                                     if (($0 | 0) > 35) {
+                                      $1 = 666;
+                                      if (($0 | 0) > 36) {
+                                       $1 = 703;
+                                       if (($0 | 0) > 37) {
+                                        $1 = 741;
+                                        if (($0 | 0) > 38) {
+                                         $1 = 780;
+                                         if (($0 | 0) > 39) {
+                                          $1 = 820;
+                                          wasm2js_i32$0 = 0;
+                                          while (1) {
+                                           switch (wasm2js_i32$0) {
+                                           case 0:
+                                            if (!(($0 | 0) > 40)) {
+                                             wasm2js_i32$0 = 137;
+                                             continue;
+                                            }
+                                            $1 = 861;
+                                           case 1:
+                                            if (!(($0 | 0) > 41)) {
+                                             wasm2js_i32$0 = 136;
+                                             continue;
+                                            }
+                                            $1 = 903;
+                                           case 2:
+                                            if (!(($0 | 0) > 42)) {
+                                             wasm2js_i32$0 = 135;
+                                             continue;
+                                            }
+                                            $1 = 946;
+                                           case 3:
+                                            if (!(($0 | 0) > 43)) {
+                                             wasm2js_i32$0 = 134;
+                                             continue;
+                                            }
+                                            $1 = 990;
+                                           case 4:
+                                            if (!(($0 | 0) > 44)) {
+                                             wasm2js_i32$0 = 133;
+                                             continue;
+                                            }
+                                            $1 = 1035;
+                                           case 5:
+                                            if (!(($0 | 0) > 45)) {
+                                             wasm2js_i32$0 = 132;
+                                             continue;
+                                            }
+                                            $1 = 1081;
+                                           case 6:
+                                            if (!(($0 | 0) > 46)) {
+                                             wasm2js_i32$0 = 131;
+                                             continue;
+                                            }
+                                            $1 = 1128;
+                                           case 7:
+                                            if (!(($0 | 0) > 47)) {
+                                             wasm2js_i32$0 = 130;
+                                             continue;
+                                            }
+                                            $1 = 1176;
+                                           case 8:
+                                            if (!(($0 | 0) > 48)) {
+                                             wasm2js_i32$0 = 129;
+                                             continue;
+                                            }
+                                            $1 = 1225;
+                                           case 9:
+                                            if (!(($0 | 0) > 49)) {
+                                             wasm2js_i32$0 = 128;
+                                             continue;
+                                            }
+                                            $1 = 1275;
+                                           case 10:
+                                            if (!(($0 | 0) > 50)) {
+                                             wasm2js_i32$0 = 127;
+                                             continue;
+                                            }
+                                            $1 = 1326;
+                                           case 11:
+                                            if (!(($0 | 0) > 51)) {
+                                             wasm2js_i32$0 = 126;
+                                             continue;
+                                            }
+                                            $1 = 1378;
+                                           case 12:
+                                            if (!(($0 | 0) > 52)) {
+                                             wasm2js_i32$0 = 125;
+                                             continue;
+                                            }
+                                            $1 = 1431;
+                                           case 13:
+                                            if (!(($0 | 0) > 53)) {
+                                             wasm2js_i32$0 = 124;
+                                             continue;
+                                            }
+                                            $1 = 1485;
+                                           case 14:
+                                            if (!(($0 | 0) > 54)) {
+                                             wasm2js_i32$0 = 123;
+                                             continue;
+                                            }
+                                            $1 = 1540;
+                                           case 15:
+                                            if (!(($0 | 0) > 55)) {
+                                             wasm2js_i32$0 = 122;
+                                             continue;
+                                            }
+                                            $1 = 1596;
+                                           case 16:
+                                            if (!(($0 | 0) > 56)) {
+                                             wasm2js_i32$0 = 121;
+                                             continue;
+                                            }
+                                            $1 = 1653;
+                                           case 17:
+                                            if (!(($0 | 0) > 57)) {
+                                             wasm2js_i32$0 = 120;
+                                             continue;
+                                            }
+                                            $1 = 1711;
+                                           case 18:
+                                            if (!(($0 | 0) > 58)) {
+                                             wasm2js_i32$0 = 119;
+                                             continue;
+                                            }
+                                            $1 = 1770;
+                                           case 19:
+                                            if (!(($0 | 0) > 59)) {
+                                             wasm2js_i32$0 = 118;
+                                             continue;
+                                            }
+                                            $1 = 1830;
+                                           case 20:
+                                            if (!(($0 | 0) > 60)) {
+                                             wasm2js_i32$0 = 117;
+                                             continue;
+                                            }
+                                            $1 = 1891;
+                                           case 21:
+                                            if (!(($0 | 0) > 61)) {
+                                             wasm2js_i32$0 = 116;
+                                             continue;
+                                            }
+                                            $1 = 1953;
+                                           case 22:
+                                            if (!(($0 | 0) > 62)) {
+                                             wasm2js_i32$0 = 115;
+                                             continue;
+                                            }
+                                            $1 = 2016;
+                                           case 23:
+                                            if (!(($0 | 0) > 63)) {
+                                             wasm2js_i32$0 = 114;
+                                             continue;
+                                            }
+                                            $1 = 2080;
+                                           case 24:
+                                            if (!(($0 | 0) > 64)) {
+                                             wasm2js_i32$0 = 113;
+                                             continue;
+                                            }
+                                            $1 = 2145;
+                                           case 25:
+                                            if (!(($0 | 0) > 65)) {
+                                             wasm2js_i32$0 = 112;
+                                             continue;
+                                            }
+                                            $1 = 2211;
+                                           case 26:
+                                            if (!(($0 | 0) > 66)) {
+                                             wasm2js_i32$0 = 111;
+                                             continue;
+                                            }
+                                            $1 = 2278;
+                                           case 27:
+                                            if (!(($0 | 0) > 67)) {
+                                             wasm2js_i32$0 = 110;
+                                             continue;
+                                            }
+                                            $1 = 2346;
+                                           case 28:
+                                            if (!(($0 | 0) > 68)) {
+                                             wasm2js_i32$0 = 109;
+                                             continue;
+                                            }
+                                            $1 = 2415;
+                                           case 29:
+                                            if (!(($0 | 0) > 69)) {
+                                             wasm2js_i32$0 = 108;
+                                             continue;
+                                            }
+                                            $1 = 2485;
+                                           case 30:
+                                            if (!(($0 | 0) > 70)) {
+                                             wasm2js_i32$0 = 107;
+                                             continue;
+                                            }
+                                            $1 = 2556;
+                                           case 31:
+                                            if (!(($0 | 0) > 71)) {
+                                             wasm2js_i32$0 = 106;
+                                             continue;
+                                            }
+                                            $1 = 2628;
+                                           case 32:
+                                            if (!(($0 | 0) > 72)) {
+                                             wasm2js_i32$0 = 105;
+                                             continue;
+                                            }
+                                            $1 = 2701;
+                                           case 33:
+                                            if (!(($0 | 0) > 73)) {
+                                             wasm2js_i32$0 = 104;
+                                             continue;
+                                            }
+                                            $1 = 2775;
+                                           case 34:
+                                            if (!(($0 | 0) > 74)) {
+                                             wasm2js_i32$0 = 103;
+                                             continue;
+                                            }
+                                            $1 = 2850;
+                                           case 35:
+                                            if (!(($0 | 0) > 75)) {
+                                             wasm2js_i32$0 = 102;
+                                             continue;
+                                            }
+                                            $1 = 2926;
+                                           case 36:
+                                            if (!(($0 | 0) > 76)) {
+                                             wasm2js_i32$0 = 101;
+                                             continue;
+                                            }
+                                            $1 = 3003;
+                                           case 37:
+                                            if (!(($0 | 0) > 77)) {
+                                             wasm2js_i32$0 = 100;
+                                             continue;
+                                            }
+                                            $1 = 3081;
+                                           case 38:
+                                            if (!(($0 | 0) > 78)) {
+                                             wasm2js_i32$0 = 99;
+                                             continue;
+                                            }
+                                            $1 = 3160;
+                                           case 39:
+                                            if (!(($0 | 0) > 79)) {
+                                             wasm2js_i32$0 = 98;
+                                             continue;
+                                            }
+                                            $1 = 3240;
+                                           case 40:
+                                            if (!(($0 | 0) > 80)) {
+                                             wasm2js_i32$0 = 97;
+                                             continue;
+                                            }
+                                            $1 = 3321;
+                                           case 41:
+                                            if (!(($0 | 0) > 81)) {
+                                             wasm2js_i32$0 = 96;
+                                             continue;
+                                            }
+                                            $1 = 3403;
+                                           case 42:
+                                            if (!(($0 | 0) > 82)) {
+                                             wasm2js_i32$0 = 95;
+                                             continue;
+                                            }
+                                            $1 = 3486;
+                                           case 43:
+                                            if (!(($0 | 0) > 83)) {
+                                             wasm2js_i32$0 = 94;
+                                             continue;
+                                            }
+                                            $1 = 3570;
+                                           case 44:
+                                            if (!(($0 | 0) > 84)) {
+                                             wasm2js_i32$0 = 93;
+                                             continue;
+                                            }
+                                            $1 = 3655;
+                                           case 45:
+                                            if (!(($0 | 0) > 85)) {
+                                             wasm2js_i32$0 = 92;
+                                             continue;
+                                            }
+                                            $1 = 3741;
+                                           case 46:
+                                            if (!(($0 | 0) > 86)) {
+                                             wasm2js_i32$0 = 91;
+                                             continue;
+                                            }
+                                            $1 = 3828;
+                                           case 47:
+                                            if (!(($0 | 0) > 87)) {
+                                             wasm2js_i32$0 = 90;
+                                             continue;
+                                            }
+                                            $1 = 3916;
+                                           case 48:
+                                            if (!(($0 | 0) > 88)) {
+                                             wasm2js_i32$0 = 89;
+                                             continue;
+                                            }
+                                            $1 = 4005;
+                                           case 49:
+                                            if (!(($0 | 0) > 89)) {
+                                             wasm2js_i32$0 = 88;
+                                             continue;
+                                            }
+                                            $1 = 4095;
+                                           case 50:
+                                            if (!(($0 | 0) > 90)) {
+                                             wasm2js_i32$0 = 87;
+                                             continue;
+                                            }
+                                            $1 = 4186;
+                                           case 51:
+                                            if (!(($0 | 0) > 91)) {
+                                             wasm2js_i32$0 = 86;
+                                             continue;
+                                            }
+                                            $1 = 4278;
+                                           case 52:
+                                            if (!(($0 | 0) > 92)) {
+                                             wasm2js_i32$0 = 85;
+                                             continue;
+                                            }
+                                            $1 = 4371;
+                                           case 53:
+                                            if (!(($0 | 0) > 93)) {
+                                             wasm2js_i32$0 = 84;
+                                             continue;
+                                            }
+                                            $1 = 4465;
+                                           case 54:
+                                            if (!(($0 | 0) > 94)) {
+                                             wasm2js_i32$0 = 83;
+                                             continue;
+                                            }
+                                            $1 = 4560;
+                                           case 55:
+                                            if (!(($0 | 0) > 95)) {
+                                             wasm2js_i32$0 = 82;
+                                             continue;
+                                            }
+                                            $1 = 4656;
+                                           case 56:
+                                            if (!(($0 | 0) > 96)) {
+                                             wasm2js_i32$0 = 81;
+                                             continue;
+                                            }
+                                            $1 = 4753;
+                                           case 57:
+                                            if (!(($0 | 0) > 97)) {
+                                             wasm2js_i32$0 = 80;
+                                             continue;
+                                            }
+                                            $1 = 4851;
+                                           case 58:
+                                            if (!(($0 | 0) > 98)) {
+                                             wasm2js_i32$0 = 79;
+                                             continue;
+                                            }
+                                            $1 = 4950;
+                                           case 59:
+                                            if (!(($0 | 0) > 99)) {
+                                             wasm2js_i32$0 = 78;
+                                             continue;
+                                            }
+                                            $1 = 5050;
+                                           case 60:
+                                            if (!(($0 | 0) > 100)) {
+                                             wasm2js_i32$0 = 77;
+                                             continue;
+                                            }
+                                            $1 = 5151;
+                                           case 61:
+                                            if (!(($0 | 0) > 101)) {
+                                             wasm2js_i32$0 = 76;
+                                             continue;
+                                            }
+                                            $1 = 5253;
+                                           case 62:
+                                            if (!(($0 | 0) > 102)) {
+                                             wasm2js_i32$0 = 75;
+                                             continue;
+                                            }
+                                            $1 = 5356;
+                                           case 63:
+                                            if (!(($0 | 0) > 103)) {
+                                             wasm2js_i32$0 = 74;
+                                             continue;
+                                            }
+                                            $1 = 5460;
+                                           case 64:
+                                            if (!(($0 | 0) > 104)) {
+                                             wasm2js_i32$0 = 73;
+                                             continue;
+                                            }
+                                            $1 = 5565;
+                                           case 65:
+                                            if (!(($0 | 0) > 105)) {
+                                             wasm2js_i32$0 = 72;
+                                             continue;
+                                            }
+                                            $1 = 5671;
+                                           case 66:
+                                            if (!(($0 | 0) > 106)) {
+                                             wasm2js_i32$0 = 71;
+                                             continue;
+                                            }
+                                            $1 = 5778;
+                                           case 67:
+                                            if (!(($0 | 0) > 107)) {
+                                             wasm2js_i32$0 = 70;
+                                             continue;
+                                            }
+                                            $1 = 5886;
+                                           case 68:
+                                            if (!(($0 | 0) > 108)) {
+                                             wasm2js_i32$0 = 69;
+                                             continue;
+                                            }
+                                            $1 = 5995;
+                                            $1 = ($0 | 0) > 109 ? 6105 : $1;
+                                           case 69:
+                                           case 70:
+                                           case 71:
+                                           case 72:
+                                           case 73:
+                                           case 74:
+                                           case 75:
+                                           case 76:
+                                           case 77:
+                                           case 78:
+                                           case 79:
+                                           case 80:
+                                           case 81:
+                                           case 82:
+                                           case 83:
+                                           case 84:
+                                           case 85:
+                                           case 86:
+                                           case 87:
+                                           case 88:
+                                           case 89:
+                                           case 90:
+                                           case 91:
+                                           case 92:
+                                           case 93:
+                                           case 94:
+                                           case 95:
+                                           case 96:
+                                           case 97:
+                                           case 98:
+                                           case 99:
+                                           case 100:
+                                           case 101:
+                                           case 102:
+                                           case 103:
+                                           case 104:
+                                           case 105:
+                                           case 106:
+                                           case 107:
+                                           case 108:
+                                           case 109:
+                                           case 110:
+                                           case 111:
+                                           case 112:
+                                           case 113:
+                                           case 114:
+                                           case 115:
+                                           case 116:
+                                           case 117:
+                                           case 118:
+                                           case 119:
+                                           case 120:
+                                           case 121:
+                                           case 122:
+                                           case 123:
+                                           case 124:
+                                           case 125:
+                                           case 126:
+                                           case 127:
+                                           case 128:
+                                           case 129:
+                                           case 130:
+                                           case 131:
+                                           case 132:
+                                           case 133:
+                                           case 134:
+                                           case 135:
+                                           case 136:
+                                           };
+                                           break;
+                                          };
+                                         }
+                                        }
+                                       }
+                                      }
+                                     }
+                                    }
+                                   }
+                                  }
+                                 }
+                                }
+                               }
+                              }
+                             }
+                            }
+                           }
+                          }
+                         }
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  return $1 | 0;
+ }
+ 
+ function deep_mixed($0) {
+  $0 = $0 | 0;
+  var $1 = 0;
+  $1 = 1;
+  mx0 : {
+   if (!$0) {
+    break mx0
+   }
+   if (($0 | 0) != 1) {
+    $1 = 4;
+    if (($0 | 0) == 2) {
+     break mx0
+    }
+    if (($0 | 0) != 3) {
+     $1 = 7;
+     if (($0 | 0) == 4) {
+      break mx0
+     }
+     if (($0 | 0) != 5) {
+      $1 = 10;
+      if (($0 | 0) == 6) {
+       break mx0
+      }
+      if (($0 | 0) != 7) {
+       $1 = 13;
+       if (($0 | 0) == 8) {
+        break mx0
+       }
+       if (($0 | 0) != 9) {
+        $1 = 16;
+        if (($0 | 0) == 10) {
+         break mx0
+        }
+        if (($0 | 0) != 11) {
+         $1 = 19;
+         if (($0 | 0) == 12) {
+          break mx0
+         }
+         if (($0 | 0) != 13) {
+          $1 = 22;
+          if (($0 | 0) == 14) {
+           break mx0
+          }
+          if (($0 | 0) != 15) {
+           $1 = 25;
+           if (($0 | 0) == 16) {
+            break mx0
+           }
+           if (($0 | 0) != 17) {
+            $1 = 28;
+            if (($0 | 0) == 18) {
+             break mx0
+            }
+            if (($0 | 0) != 19) {
+             $1 = 31;
+             if (($0 | 0) == 20) {
+              break mx0
+             }
+             if (($0 | 0) != 21) {
+              $1 = 34;
+              if (($0 | 0) == 22) {
+               break mx0
+              }
+              if (($0 | 0) != 23) {
+               $1 = 37;
+               if (($0 | 0) == 24) {
+                break mx0
+               }
+               if (($0 | 0) != 25) {
+                $1 = 40;
+                if (($0 | 0) == 26) {
+                 break mx0
+                }
+                if (($0 | 0) != 27) {
+                 $1 = 43;
+                 if (($0 | 0) == 28) {
+                  break mx0
+                 }
+                 if (($0 | 0) != 29) {
+                  $1 = 46;
+                  if (($0 | 0) == 30) {
+                   break mx0
+                  }
+                  if (($0 | 0) != 31) {
+                   $1 = 49;
+                   if (($0 | 0) == 32) {
+                    break mx0
+                   }
+                   if (($0 | 0) != 33) {
+                    $1 = 52;
+                    if (($0 | 0) == 34) {
+                     break mx0
+                    }
+                    if (($0 | 0) != 35) {
+                     $1 = 55;
+                     if (($0 | 0) == 36) {
+                      break mx0
+                     }
+                     if (($0 | 0) != 37) {
+                      $1 = 58;
+                      if (($0 | 0) == 38) {
+                       break mx0
+                      }
+                      if (($0 | 0) != 39) {
+                       $1 = 61;
+                       if (($0 | 0) == 40) {
+                        break mx0
+                       }
+                       if (($0 | 0) != 41) {
+                        $1 = 64;
+                        if (($0 | 0) == 42) {
+                         break mx0
+                        }
+                        if (($0 | 0) != 43) {
+                         $1 = 67;
+                         if (($0 | 0) == 44) {
+                          break mx0
+                         }
+                         if (($0 | 0) != 45) {
+                          $1 = 70;
+                          if (($0 | 0) == 46) {
+                           break mx0
+                          }
+                          if (($0 | 0) != 47) {
+                           $1 = 73;
+                           if (($0 | 0) == 48) {
+                            break mx0
+                           }
+                           if (($0 | 0) != 49) {
+                            $1 = 76;
+                            if (($0 | 0) == 50) {
+                             break mx0
+                            }
+                            if (($0 | 0) != 51) {
+                             $1 = 79;
+                             if (($0 | 0) == 52) {
+                              break mx0
+                             }
+                             if (($0 | 0) != 53) {
+                              $1 = 82;
+                              if (($0 | 0) == 54) {
+                               break mx0
+                              }
+                              if (($0 | 0) != 55) {
+                               $1 = 85;
+                               if (($0 | 0) == 56) {
+                                break mx0
+                               }
+                               if (($0 | 0) != 57) {
+                                $1 = 88;
+                                if (($0 | 0) == 58) {
+                                 break mx0
+                                }
+                                if (($0 | 0) != 59) {
+                                 $1 = 91;
+                                 if (($0 | 0) == 60) {
+                                  break mx0
+                                 }
+                                 if (($0 | 0) != 61) {
+                                  $1 = 94;
+                                  if (($0 | 0) == 62) {
+                                   break mx0
+                                  }
+                                  if (($0 | 0) != 63) {
+                                   $1 = 97;
+                                   if (($0 | 0) == 64) {
+                                    break mx0
+                                   }
+                                   if (($0 | 0) != 65) {
+                                    $1 = 100;
+                                    if (($0 | 0) == 66) {
+                                     break mx0
+                                    }
+                                    if (($0 | 0) != 67) {
+                                     $1 = 103;
+                                     if (($0 | 0) == 68) {
+                                      break mx0
+                                     }
+                                     if (($0 | 0) != 69) {
+                                      $1 = 106;
+                                      if (($0 | 0) == 70) {
+                                       break mx0
+                                      }
+                                      if (($0 | 0) != 71) {
+                                       $1 = 109;
+                                       if (($0 | 0) == 72) {
+                                        break mx0
+                                       }
+                                       if (($0 | 0) != 73) {
+                                        $1 = 112;
+                                        if (($0 | 0) == 74) {
+                                         break mx0
+                                        }
+                                        if (($0 | 0) != 75) {
+                                         $1 = 115;
+                                         if (($0 | 0) == 76) {
+                                          break mx0
+                                         }
+                                         if (($0 | 0) != 77) {
+                                          $1 = 118;
+                                          if (($0 | 0) == 78) {
+                                           break mx0
+                                          }
+                                          $1 = (($0 | 0) != 79 ? 120 : $1) + 10 | 0;
+                                         }
+                                         $1 = $1 + 10 | 0;
+                                        }
+                                        $1 = $1 + 10 | 0;
+                                       }
+                                       $1 = $1 + 10 | 0;
+                                      }
+                                      $1 = $1 + 10 | 0;
+                                     }
+                                     $1 = $1 + 10 | 0;
+                                    }
+                                    $1 = $1 + 10 | 0;
+                                   }
+                                   $1 = $1 + 10 | 0;
+                                  }
+                                  $1 = $1 + 10 | 0;
+                                 }
+                                 $1 = $1 + 10 | 0;
+                                }
+                                $1 = $1 + 10 | 0;
+                               }
+                               $1 = $1 + 10 | 0;
+                              }
+                              $1 = $1 + 10 | 0;
+                             }
+                             $1 = $1 + 10 | 0;
+                            }
+                            $1 = $1 + 10 | 0;
+                           }
+                           $1 = $1 + 10 | 0;
+                          }
+                          $1 = $1 + 10 | 0;
+                         }
+                         $1 = $1 + 10 | 0;
+                        }
+                        $1 = $1 + 10 | 0;
+                       }
+                       $1 = $1 + 10 | 0;
+                      }
+                      $1 = $1 + 10 | 0;
+                     }
+                     $1 = $1 + 10 | 0;
+                    }
+                    $1 = $1 + 10 | 0;
+                   }
+                   $1 = $1 + 10 | 0;
+                  }
+                  $1 = $1 + 10 | 0;
+                 }
+                 $1 = $1 + 10 | 0;
+                }
+                $1 = $1 + 10 | 0;
+               }
+               $1 = $1 + 10 | 0;
+              }
+              $1 = $1 + 10 | 0;
+             }
+             $1 = $1 + 10 | 0;
+            }
+            $1 = $1 + 10 | 0;
+           }
+           $1 = $1 + 10 | 0;
+          }
+          $1 = $1 + 10 | 0;
+         }
+         $1 = $1 + 10 | 0;
+        }
+        $1 = $1 + 10 | 0;
+       }
+       $1 = $1 + 10 | 0;
+      }
+      $1 = $1 + 10 | 0;
+     }
+     $1 = $1 + 10 | 0;
+    }
+    $1 = $1 + 10 | 0;
+   }
+  }
+  return $1 + 10 | 0;
+ }
+ 
+ function deep_siblings($0) {
+  $0 = $0 | 0;
+  var $1 = 0;
+  $1 = $0 ? 49 : $1;
+  if ($0) {
+   $1 = $1 + 4900 | 0
+  }
+  return $1 | 0;
+ }
+ 
+ function bump() {
+  g = g + 1 | 0;
+  return g;
+ }
+ 
+ function effectful_cond($0) {
+  $0 = $0 | 0;
+  var $1 = 0, wasm2js_i32$0 = 0;
+  g = 0;
+  if ((bump() | 0) <= ($0 | 0)) {
+   $1 = 1;
+   if ((bump() | 0) <= ($0 | 0)) {
+    $1 = 2;
+    if ((bump() | 0) <= ($0 | 0)) {
+     $1 = 3;
+     if ((bump() | 0) <= ($0 | 0)) {
+      $1 = 4;
+      if ((bump() | 0) <= ($0 | 0)) {
+       $1 = 5;
+       if ((bump() | 0) <= ($0 | 0)) {
+        $1 = 6;
+        if ((bump() | 0) <= ($0 | 0)) {
+         $1 = 7;
+         if ((bump() | 0) <= ($0 | 0)) {
+          $1 = 8;
+          if ((bump() | 0) <= ($0 | 0)) {
+           $1 = 9;
+           if ((bump() | 0) <= ($0 | 0)) {
+            $1 = 10;
+            if ((bump() | 0) <= ($0 | 0)) {
+             $1 = 11;
+             if ((bump() | 0) <= ($0 | 0)) {
+              $1 = 12;
+              if ((bump() | 0) <= ($0 | 0)) {
+               $1 = 13;
+               if ((bump() | 0) <= ($0 | 0)) {
+                $1 = 14;
+                if ((bump() | 0) <= ($0 | 0)) {
+                 $1 = 15;
+                 if ((bump() | 0) <= ($0 | 0)) {
+                  $1 = 16;
+                  if ((bump() | 0) <= ($0 | 0)) {
+                   $1 = 17;
+                   if ((bump() | 0) <= ($0 | 0)) {
+                    $1 = 18;
+                    if ((bump() | 0) <= ($0 | 0)) {
+                     $1 = 19;
+                     if ((bump() | 0) <= ($0 | 0)) {
+                      $1 = 20;
+                      if ((bump() | 0) <= ($0 | 0)) {
+                       $1 = 21;
+                       if ((bump() | 0) <= ($0 | 0)) {
+                        $1 = 22;
+                        if ((bump() | 0) <= ($0 | 0)) {
+                         $1 = 23;
+                         if ((bump() | 0) <= ($0 | 0)) {
+                          $1 = 24;
+                          if ((bump() | 0) <= ($0 | 0)) {
+                           $1 = 25;
+                           if ((bump() | 0) <= ($0 | 0)) {
+                            $1 = 26;
+                            if ((bump() | 0) <= ($0 | 0)) {
+                             $1 = 27;
+                             if ((bump() | 0) <= ($0 | 0)) {
+                              $1 = 28;
+                              if ((bump() | 0) <= ($0 | 0)) {
+                               $1 = 29;
+                               if ((bump() | 0) <= ($0 | 0)) {
+                                $1 = 30;
+                                if ((bump() | 0) <= ($0 | 0)) {
+                                 $1 = 31;
+                                 if ((bump() | 0) <= ($0 | 0)) {
+                                  $1 = 32;
+                                  if ((bump() | 0) <= ($0 | 0)) {
+                                   $1 = 33;
+                                   if ((bump() | 0) <= ($0 | 0)) {
+                                    $1 = 34;
+                                    if ((bump() | 0) <= ($0 | 0)) {
+                                     $1 = 35;
+                                     if ((bump() | 0) <= ($0 | 0)) {
+                                      $1 = 36;
+                                      if ((bump() | 0) <= ($0 | 0)) {
+                                       $1 = 37;
+                                       if ((bump() | 0) <= ($0 | 0)) {
+                                        $1 = 38;
+                                        if ((bump() | 0) <= ($0 | 0)) {
+                                         $1 = 39;
+                                         if ((bump() | 0) <= ($0 | 0)) {
+                                          $1 = 40;
+                                          wasm2js_i32$0 = 0;
+                                          while (1) {
+                                           switch (wasm2js_i32$0) {
+                                           case 0:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 17;
+                                             continue;
+                                            }
+                                            $1 = 41;
+                                           case 1:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 16;
+                                             continue;
+                                            }
+                                            $1 = 42;
+                                           case 2:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 15;
+                                             continue;
+                                            }
+                                            $1 = 43;
+                                           case 3:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 14;
+                                             continue;
+                                            }
+                                            $1 = 44;
+                                           case 4:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 13;
+                                             continue;
+                                            }
+                                            $1 = 45;
+                                           case 5:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 12;
+                                             continue;
+                                            }
+                                            $1 = 46;
+                                           case 6:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 11;
+                                             continue;
+                                            }
+                                            $1 = 47;
+                                           case 7:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 10;
+                                             continue;
+                                            }
+                                            $1 = 48;
+                                           case 8:
+                                            if (!((bump() | 0) <= ($0 | 0))) {
+                                             wasm2js_i32$0 = 9;
+                                             continue;
+                                            }
+                                            $1 = 49;
+                                            $1 = (bump() | 0) <= ($0 | 0) ? 50 : $1;
+                                           case 9:
+                                           case 10:
+                                           case 11:
+                                           case 12:
+                                           case 13:
+                                           case 14:
+                                           case 15:
+                                           case 16:
+                                           };
+                                           break;
+                                          };
+                                         }
+                                        }
+                                       }
+                                      }
+                                     }
+                                    }
+                                   }
+                                  }
+                                 }
+                                }
+                               }
+                              }
+                             }
+                            }
+                           }
+                          }
+                         }
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  return $1 + Math_imul(g, 1e3) | 0;
+ }
+ 
+ function nested_dispatch($0) {
+  $0 = $0 | 0;
+  var $1 = 0;
+  return ($0 ? 49049 : $1) | 0;
+ }
+ 
+ function loop_in_chain($0) {
+  $0 = $0 | 0;
+  var $1 = 0, $2 = 0;
+  while (1) {
+   $1 = $0 + $1 | 0;
+   $2 = $2 + 1 | 0;
+   if (($2 | 0) < 5) {
+    continue
+   }
+   break;
+  };
+  return $1 + 49 | 0;
+ }
+ 
+ return {
+  "deep_fallthrough": deep_fallthrough, 
+  "deep_branch": deep_branch, 
+  "deep_switch": deep_switch, 
+  "deep_if": deep_if, 
+  "deep_mixed": deep_mixed, 
+  "deep_siblings": deep_siblings, 
+  "effectful_cond": effectful_cond, 
+  "nested_dispatch": nested_dispatch, 
+  "loop_in_chain": loop_in_chain
+ };
+}
+
+var retasmFunc = asmFunc({
+});
+export var deep_fallthrough = retasmFunc.deep_fallthrough;
+export var deep_branch = retasmFunc.deep_branch;
+export var deep_switch = retasmFunc.deep_switch;
+export var deep_if = retasmFunc.deep_if;
+export var deep_mixed = retasmFunc.deep_mixed;
+export var deep_siblings = retasmFunc.deep_siblings;
+export var effectful_cond = retasmFunc.effectful_cond;
+export var nested_dispatch = retasmFunc.nested_dispatch;
+export var loop_in_chain = retasmFunc.loop_in_chain;

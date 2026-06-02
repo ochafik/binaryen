@@ -1055,6 +1055,22 @@ Ref Wasm2JSBuilder::processExpression(Expression* curr,
 
     SwitchProcessor switchProcessor;
 
+    // Information needed to translate a `br` to a block whose nesting was
+    // flattened away into a `while (1) { switch (...) { ... } }` dispatch loop
+    // (see flattenChain). A `break` to such a block becomes an assignment
+    // to the dispatch state variable followed by a `continue` to the loop.
+    struct FlattenedTarget {
+      IString stateVar;  // the dispatch state variable
+      IString loopLabel; // the label of the dispatch `while` loop
+      int32_t segment;   // the switch case to jump to
+    };
+    // Maps the names of flattened blocks to their dispatch info. Block names
+    // are unique within a function, so a single map suffices even when
+    // flattened dispatch loops are themselves nested.
+    std::unordered_map<Name, FlattenedTarget> flattenedTargets;
+    // Counter used to generate unique dispatch loop labels per function.
+    Index flattenCounter = 0;
+
     ExpressionProcessor(Wasm2JSBuilder* parent,
                         Module* m,
                         Function* func,
@@ -1149,6 +1165,39 @@ Ref Wasm2JSBuilder::processExpression(Expression* curr,
 
     // Visitors
 
+    // Toolchains like LLVM routinely emit functions whose structured control
+    // flow is a very deep tower of nested blocks and ifs (thousands of levels
+    // deep for large functions, switches, and emscripten's JS-based exception
+    // / longjmp lowering). Naively, each named wasm block becomes a JS labeled
+    // block (`label : { ... }`) and each `if` a JS `if`, so such a tower turns
+    // into deeply nested JS. JS engines parse/compile nested statements
+    // recursively, so a deep enough tower overflows the engine's stack at
+    // parse time ("Maximum call stack size exceeded") - before the code ever
+    // runs.
+    //
+    // To prevent that we keep track of the JS nesting we are currently
+    // emitting (`blockNesting`), and once it would get too deep we flatten the
+    // chain of nested blocks/ifs from that point on into a single, shallow
+    // `while (1) { switch (state) { ... } }` dispatch loop (flattenChain).
+    // This bounds the JS nesting depth by a small constant regardless of the
+    // size of the input. Ordinary, shallow code is unaffected and keeps its
+    // readable nested form.
+    //
+    // (Enums are used rather than `static const` members because
+    // ExpressionProcessor is a function-local struct.)
+    //
+    // The JS nesting depth at which we start flattening chains of nested
+    // blocks/ifs. Chosen comfortably above the nesting that ordinary code
+    // reaches (so normal output is unchanged and stays readable), yet far
+    // below the depth at which JS engine parsers overflow their stack (~1500
+    // levels). The generated JS nesting depth is thus bounded by roughly this
+    // constant regardless of how large the input is.
+    enum { FLATTEN_NESTING_THRESHOLD = 40 };
+
+    // The current depth of JS blocks/ifs/loops we are emitting into. Used to
+    // decide when to flatten a chain of nested blocks/ifs (see above).
+    Index blockNesting = 0;
+
     Ref visitBlock(Block* curr) {
       if (switchProcessor.unneededExpressions.contains(curr)) {
         // We have had our tail hoisted into a switch that is nested in our
@@ -1156,12 +1205,26 @@ Ref Wasm2JSBuilder::processExpression(Expression* curr,
         // ourselves in fact.
         return visit(curr->list[0], NO_RESULT);
       }
+      // If emitting this block normally would nest the JS too deeply, and this
+      // block begins a chain of nested blocks/ifs, flatten that chain into a
+      // shallow dispatch loop instead (see flattenChain).
+      if (curr->name.is() && blockNesting >= FLATTEN_NESTING_THRESHOLD) {
+        Index depth = measureChain(curr);
+        if (depth >= 2) {
+          return flattenChain(curr, depth);
+        }
+      }
       Ref ret = ValueBuilder::makeBlock();
       size_t size = curr->list.size();
+      // Visiting the contents of a named block adds one level of JS nesting
+      // (the `label : { ... }` we emit below).
+      bool nests = curr->name.is();
+      blockNesting += nests;
       for (size_t i = 0; i < size; i++) {
         flattenAppend(
           ret, ValueBuilder::makeStatement(visit(curr->list[i], NO_RESULT)));
       }
+      blockNesting -= nests;
       if (curr->name.is()) {
         ret =
           ValueBuilder::makeLabel(fromName(curr->name, NameScope::Label), ret);
@@ -1169,13 +1232,336 @@ Ref Wasm2JSBuilder::processExpression(Expression* curr,
       return ret;
     }
 
+    // --- Flattening of deep chains of nested blocks / ifs --------------------
+    //
+    // A "chain" is a tower of nested control-flow constructs, each containing
+    // the next:
+    //
+    //  (block $b0 p0
+    //   (if c1 (then
+    //    (block $b2 p2
+    //     (if c3 (then ... ) )))) t0)
+    //
+    // The chain steps from a `Block` into a named child `Block` or a child
+    // `If`, and from an `If` into its `then` arm. Only `if`s without an `else`
+    // arm are followed: those are exactly `if (c) { ... }`, which flattens
+    // cleanly into a guarded jump. Such towers are what make the generated JS
+    // deep, and flattenChain rewrites them into a shallow dispatch loop.
+
+    // A block that the SwitchProcessor marked as "unneeded" emits no JS of
+    // its own: visitBlock just emits its first child (its tail was hoisted
+    // into a switch). For the purpose of chain-finding such a block is
+    // transparent - we look straight through it to its first child.
+    Expression* skipUnneededBlocks(Expression* curr) const {
+      while (auto* block = curr->dynCast<Block>()) {
+        if (!switchProcessor.unneededExpressions.contains(block) ||
+            block->list.empty()) {
+          break;
+        }
+        curr = block->list[0];
+      }
+      return curr;
+    }
+
+    // Each chain link is a `Block` or a then-only `If`; both emit one level of
+    // JS nesting and have a "body block" whose statements are that level's
+    // contents. For a `Block` link the body is the block itself; for an `If`
+    // link the body is its `then` arm, which is a `Block` in flat IR.
+    // chainBodyBlock returns that body block, or nullptr if `curr` is not a
+    // valid chain link.
+    Block* chainBodyBlock(Expression* curr) const {
+      if (auto* block = curr->dynCast<Block>()) {
+        return block;
+      }
+      if (auto* iff = curr->dynCast<If>()) {
+        // An `if` without an `else` is `if (c) { ... }`, which flattens into a
+        // guarded jump; one with an `else` does not, so it is not a chain
+        // link. The `then` arm must be a Block for us to flatten it.
+        if (!iff->ifFalse) {
+          return iff->ifTrue->dynCast<Block>();
+        }
+      }
+      return nullptr;
+    }
+
+    // Returns the chain link to descend into to continue a chain past `curr`,
+    // or nullptr if `curr` does not continue a chain. When a link's body has
+    // several chainable children we descend into the one with the deepest
+    // sub-chain, so that flattening removes as much nesting as possible; the
+    // others are emitted normally and flattened on their own if still deep.
+    Expression* chainChild(Expression* curr) {
+      Block* body = chainBodyBlock(curr);
+      if (!body) {
+        return nullptr;
+      }
+      Expression* best = nullptr;
+      Index bestDepth = 0;
+      for (auto* item : body->list) {
+        // Look through unneeded pass-through blocks (no JS nesting).
+        auto* child = skipUnneededBlocks(item);
+        bool chainable = false;
+        if (auto* b = child->dynCast<Block>()) {
+          chainable = b->name.is() &&
+                      !switchProcessor.unneededExpressions.contains(b);
+        } else if (auto* iff = child->dynCast<If>()) {
+          chainable = !iff->ifFalse && iff->ifTrue->is<Block>();
+        }
+        if (chainable) {
+          Index depth = measureChain(child);
+          if (depth > bestDepth) {
+            bestDepth = depth;
+            best = child;
+          }
+        }
+      }
+      return best;
+    }
+
+    // Returns the length of the deepest chain of nested blocks/ifs starting at
+    // `curr` (1 if `curr` is a chain link with no chainable child, 0 if it is
+    // not a chain link at all). Memoized, since it is queried repeatedly while
+    // walking a function.
+    std::unordered_map<Expression*, Index> chainDepths;
+    Index measureChain(Expression* curr) {
+      if (!chainBodyBlock(curr)) {
+        return 0;
+      }
+      auto [it, inserted] = chainDepths.insert({curr, 0});
+      if (!inserted) {
+        return it->second;
+      }
+      Index length = 1;
+      if (Expression* child = chainChild(curr)) {
+        length += measureChain(child);
+      }
+      // Re-find: the recursive calls above may have rehashed the map.
+      chainDepths[curr] = length;
+      return length;
+    }
+
+    // Lowers a deep chain of nested blocks/ifs into a single, shallow
+    // `while (1) { switch (state) { ... } }` dispatch loop.
+    //
+    // Each chain link becomes a group of fall-through switch "segments". A
+    // `Block` link  (block $b p... CHILD t...)  contributes a prefix segment
+    // (`p...`, run on entry) and a tail segment (`t...`, run after CHILD and
+    // any branch to $b). An `If` link  (if c (then CHILD))  contributes a
+    // single guard segment  `if (eqz c) { go to <after the if> }`. Switch
+    // fall-through models normal control flow: entering the next link,
+    // falling out of a link into its parent's tail, etc.
+    //
+    // For example  (block $b0 p0 (if c1 (then (block $b2 p2 body))) t0)
+    // becomes:
+    //
+    //  state = 0;
+    //  $L : while (1) {
+    //    switch (state) {
+    //     case 0: p0                              // enter $b0
+    //     case 1: if (eqz c1) { state = 4; continue $L } // guard of the if
+    //     case 2: p2                              // enter $b2
+    //     case 3: body                            // innermost content
+    //     case 4: t0                              // tail of $b0
+    //    }
+    //    break $L;
+    //  }
+    //
+    // A `br` to a flattened block, and an if whose guard fails, are lowered to
+    // `state = <segment>; continue $L;` (see makeBreakOrContinue / the guard
+    // above), which works from any JS nesting depth. The depth of the
+    // generated JS is thus a small constant regardless of the chain length.
+    // Each piece is still visited recursively, so any further chains within
+    // the pieces are flattened too.
+    Ref flattenChain(Expression* curr, Index depth) {
+      // A link of the chain. `body` is the link's body block (the block
+      // itself for a `Block` link, or the `then` arm for an `If` link). For an
+      // `If` link `iff` is also set, and a guard is emitted before its body.
+      // `childIndex` is the index of the chain child within `body->list`.
+      struct Link {
+        Block* body = nullptr;
+        If* iff = nullptr; // set for `If` links
+        Index childIndex = 0;
+        int32_t enterSegment = 0;
+        int32_t tailSegment = -1;
+      };
+      std::vector<Link> chain;
+      chain.reserve(depth);
+
+      // Walk the chain, collecting links outermost-first.
+      Expression* iter = curr;
+      while (iter) {
+        Expression* next = chainChild(iter);
+        Link link;
+        link.iff = iter->dynCast<If>();
+        link.body = chainBodyBlock(iter);
+        assert(link.body && "chain link must have a body block");
+        if (next) {
+          // `next` may sit behind unneeded pass-through blocks.
+          for (Index i = 0; i < link.body->list.size(); i++) {
+            if (skipUnneededBlocks(link.body->list[i]) == next) {
+              link.childIndex = i;
+              break;
+            }
+          }
+        }
+        chain.push_back(link);
+        iter = next;
+      }
+      assert(chain.size() == depth);
+
+      // Assign segment numbers. Enter segments come first, in chain order
+      // (0..depth-1); the innermost link emits its whole body into its enter
+      // segment. Then come the tail segments (the code after the chain child)
+      // of the enclosing links, innermost first, so that falling out of the
+      // innermost body proceeds into the tail of each enclosing link in turn.
+      Index numSegments = depth; // enter segments
+      for (Index i = 0; i < depth; i++) {
+        chain[i].enterSegment = int32_t(i);
+      }
+      for (Index i = depth - 1; i-- > 0;) {
+        chain[i].tailSegment = int32_t(numSegments++);
+      }
+      // The segment to jump to when exiting link `linkIndex` (a branch to it,
+      // or an `If` guard that fails): the tail of the nearest enclosing link,
+      // or one past the last segment (which falls through to `break $L`).
+      auto afterSegment = [&](Index linkIndex) -> int32_t {
+        return linkIndex > 0 ? chain[linkIndex - 1].tailSegment
+                             : int32_t(numSegments);
+      };
+
+      // Allocate the dispatch state variable and a unique loop label.
+      IString stateVar = parent->getTemp(Type::i32, func);
+      IString loopLabel =
+        fromName(Name(std::string("wasm2js_dispatch_") +
+                      std::to_string(flattenCounter++)),
+                 NameScope::Label);
+
+      // A `br` to a flattened link's body block lands right after that block,
+      // i.e. at the tail of its nearest enclosing link (afterSegment): for a
+      // `Block` link that is after the block, for an `If` link that is after
+      // the `then` arm and hence after the if. Register these before visiting
+      // children so that visitBreak can see them. The body block of either
+      // kind of link may be named and thus a branch target.
+      for (Index i = 0; i < depth; i++) {
+        if (chain[i].body->name.is()) {
+          flattenedTargets[chain[i].body->name] =
+            FlattenedTarget{stateVar, loopLabel, afterSegment(i)};
+        }
+      }
+
+      // The segment code is emitted inside the dispatch `while { switch }`,
+      // which is two levels of JS nesting deeper than where the chain
+      // started. Crucially this means the long chain is replaced by just two
+      // nesting levels: any chains *within* a segment that are still deep will
+      // themselves be flattened recursively.
+      Index outerNesting = blockNesting;
+      enum { DISPATCH_NESTING = 2 }; // `while { ... }` + `switch { ... }`
+
+      // Build segments into a vector indexed by segment number, then append
+      // them to the switch in order.
+      std::vector<Ref> segments(numSegments);
+      for (auto& seg : segments) {
+        seg = ValueBuilder::makeBlock();
+      }
+      auto emitItemInto = [&](Ref code, Expression* e) {
+        blockNesting = outerNesting + DISPATCH_NESTING;
+        flattenAppend(code,
+                      ValueBuilder::makeStatement(visit(e, NO_RESULT)));
+        blockNesting = outerNesting;
+      };
+
+      for (Index i = 0; i < depth; i++) {
+        auto& link = chain[i];
+        Ref enter = segments[link.enterSegment];
+        // For an `If` link, emit the guard first: skip the body (jump past
+        // the if) when the condition is false. The condition is visited
+        // exactly as visitIf would; `!` of it is its faithful inversion.
+        if (link.iff) {
+          Ref cond = visit(link.iff->condition, EXPRESSION_RESULT);
+          Ref skip = ValueBuilder::makeBlock();
+          flattenAppend(skip,
+                        ValueBuilder::makeStatement(ValueBuilder::makeBinary(
+                          ValueBuilder::makeName(stateVar),
+                          SET,
+                          ValueBuilder::makeInt(afterSegment(i)))));
+          flattenAppend(skip, ValueBuilder::makeContinue(loopLabel));
+          Ref noElse;
+          flattenAppend(
+            enter,
+            ValueBuilder::makeStatement(ValueBuilder::makeIf(
+              ValueBuilder::makeUnary(L_NOT, cond), skip, noElse)));
+        }
+        // Prefix: code before the chain child (the whole body for the
+        // innermost link, which has no chain child).
+        Index to = (i + 1 < depth) ? link.childIndex : link.body->list.size();
+        for (Index j = 0; j < to; j++) {
+          emitItemInto(enter, link.body->list[j]);
+        }
+        // Tail: code after the chain child.
+        if (link.tailSegment >= 0) {
+          Ref tail = segments[link.tailSegment];
+          for (Index j = link.childIndex + 1; j < link.body->list.size();
+               j++) {
+            emitItemInto(tail, link.body->list[j]);
+          }
+        }
+      }
+
+      // Clean up: the chain's block names are out of scope from here on.
+      for (auto& link : chain) {
+        if (link.body->name.is()) {
+          flattenedTargets.erase(link.body->name);
+        }
+      }
+
+      // Assemble the switch and the dispatch loop.
+      Ref theSwitch =
+        ValueBuilder::makeSwitch(ValueBuilder::makeName(stateVar));
+      for (Index s = 0; s < numSegments; s++) {
+        ValueBuilder::appendCaseToSwitch(theSwitch,
+                                         ValueBuilder::makeNum(s));
+        ValueBuilder::appendCodeToSwitch(theSwitch, segments[s], false);
+      }
+      // state = 0; $L : while (1) { switch (...) {...} break $L; }
+      Ref loopBody = ValueBuilder::makeBlock();
+      flattenAppend(loopBody, ValueBuilder::makeStatement(theSwitch));
+      flattenAppend(loopBody, ValueBuilder::makeBreak(loopLabel));
+      Ref loop = ValueBuilder::makeLabel(
+        loopLabel,
+        ValueBuilder::makeWhile(ValueBuilder::makeInt(1), loopBody));
+
+      parent->freeTemp(Type::i32, stateVar);
+
+      Ref ret = ValueBuilder::makeBlock();
+      flattenAppend(ret,
+                    ValueBuilder::makeStatement(ValueBuilder::makeBinary(
+                      ValueBuilder::makeName(stateVar),
+                      SET,
+                      ValueBuilder::makeInt(0))));
+      flattenAppend(ret, ValueBuilder::makeStatement(loop));
+      return ret;
+    }
+
     Ref visitIf(If* curr) {
+      // If emitting this if normally would nest the JS too deeply, and this
+      // if begins a chain of nested blocks/ifs, flatten that chain into a
+      // shallow dispatch loop instead (see flattenChain). This handles deep
+      // towers of `if`s, as emitted e.g. by emscripten's JS-based exception
+      // and longjmp lowering, the same way as towers of blocks.
+      if (!curr->ifFalse && blockNesting >= FLATTEN_NESTING_THRESHOLD) {
+        Index depth = measureChain(curr);
+        if (depth >= 2) {
+          return flattenChain(curr, depth);
+        }
+      }
       Ref condition = visit(curr->condition, EXPRESSION_RESULT);
+      // The if's arms add a level of JS nesting (see blockNesting).
+      blockNesting++;
       Ref ifTrue = visit(curr->ifTrue, NO_RESULT);
       Ref ifFalse;
       if (curr->ifFalse) {
         ifFalse = visit(curr->ifFalse, NO_RESULT);
       }
+      blockNesting--;
       return ValueBuilder::makeIf(condition, ifTrue, ifFalse); // simple if
     }
 
@@ -1187,7 +1573,10 @@ Ref Wasm2JSBuilder::processExpression(Expression* curr,
         return visit(curr->body, result);
       }
       continueLabels.insert(asmLabel);
+      // The loop's body adds a level of JS nesting (see blockNesting).
+      blockNesting++;
       Ref body = visit(curr->body, result);
+      blockNesting--;
       // if we can reach the end of the block, we must leave the while (1) loop
       if (curr->body->type != Type::unreachable) {
         assert(curr->body->type == Type::none); // flat IR
@@ -1200,6 +1589,20 @@ Ref Wasm2JSBuilder::processExpression(Expression* curr,
     }
 
     Ref makeBreakOrContinue(Name name) {
+      // A branch to a block whose nesting was flattened into a dispatch loop
+      // becomes `state = <case>; continue <loop>;` (see flattenChain).
+      auto iter = flattenedTargets.find(name);
+      if (iter != flattenedTargets.end()) {
+        auto& target = iter->second;
+        Ref ret = ValueBuilder::makeBlock();
+        flattenAppend(ret,
+                      ValueBuilder::makeStatement(ValueBuilder::makeBinary(
+                        ValueBuilder::makeName(target.stateVar),
+                        SET,
+                        ValueBuilder::makeInt(target.segment))));
+        flattenAppend(ret, ValueBuilder::makeContinue(target.loopLabel));
+        return ret;
+      }
       if (continueLabels.contains(name)) {
         return ValueBuilder::makeContinue(fromName(name, NameScope::Label));
       } else {
